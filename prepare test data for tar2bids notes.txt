@@ -1,0 +1,69 @@
+步骤：
+1. according to query_summary_all.csv and tar2bids project's heuristics files
+
+	decide which study will be used as the test data
+
+2. retrieve data
+	singularity pull shub://khanlab/cfmm2tar:v0.0.1f
+	
+	by patient name
+	singularity run -B /mnt:/mnt -B /home:/home -B /tmp:/tmp ~/singularities/khanlab-cfmm2tar-master-v0.0.1f.simg -n '2018_06_15_snSx_P029' ./tar_file_for_test
+	
+	or by study date
+	singularity run -B /mnt:/mnt -B /home:/home -B /tmp:/tmp ~/singularities/khanlab-cfmm2tar-master-v0.0.1f.simg -d '20180615' ./tar_file_for_test
+
+	the output is a tar file:
+		Khan_NeuroAnalytics_20180615_2018_06_15_snSx_P029_2.06BD71CB.tar
+		
+3 create test data
+	python ../create_tar2bids_test_data.py Kohler_PS_PRC_20171019_2017_10_19_MO11_1.541FBBA2.tar ~/test -p subject-03 -s 'PI^project'
+   
+   
+-------------------test data list
+data1:
+包含sequence:
+	mp2rage:
+	sag2rage:
+	gre_field_mapping:
+	T2 TSE:
+		study date:20180615
+		patient name:  2018_06_15_snSx_P029
+		
+		retrieve cmd:
+			singularity run -B /mnt:/mnt -B /home:/home -B /tmp:/tmp ~/singularities/khanlab-cfmm2tar-master-v0.0.1f.simg -n '2018_06_15_snSx_P029' ./tar_file_for_test
+		
+		create cmd:
+		python ../create_tar2bids_test_data.py Khan_NeuroAnalytics_20180615_2018_06_15_snSx_P029_2.06BD71CB.tar ~/test -p subject-02 -s 'PI^project'
+	
+	
+data2:
+包含sequence:
+	diffusion:
+		study date: 20180302
+		patient name: 	2018_04_02_DiffModel
+
+	retrieve cmd:
+		singularity run -B /mnt:/mnt -B /home:/home -B /tmp:/tmp ~/singularities/khanlab-cfmm2tar-master-v0.0.1f.simg -n '2018_04_02_DiffModel' ./tar_file_for_test
+		
+	create cmd:		
+		python ../create_tar2bids_test_data.py Khan_DiffModelling_7T_20180402_2018_04_02_DiffModel_1.059E696B.tar ~/test -p subject-01 -s 'PI^project'
+	
+	
+
+
+	
+bold:
+	study date: 20171019
+	patient name: 2017_10_19_MO11
+	
+	retrieve cmd:
+		singularity run -B /mnt:/mnt -B /home:/home -B /tmp:/tmp ~/singularities/khanlab-cfmm2tar-master-v0.0.1f.simg -n '2017_10_19_MO11' ./tar_file_for_test
+		
+	create cmd:
+		python ../create_tar2bids_test_data.py Kohler_PS_PRC_20171019_2017_10_19_MO11_1.541FBBA2.tar ~/test -p subject-03 -s 'PI^project'
+
+另外：需要测试tar2bids是否可运行，比如：
+singularity run -B /mnt:/mnt -B /home:/home -B /tmp:/tmp ~/singularities//khanlab-tar2bids-master-0.0.2d.simg -h cfmm_base.py ./tar_file_for_test/test-Khan_DiffModelling_7T_20180402_2018_04_02_DiffModel_1.059E696B.tar
+
+这个项目的那点是anonymize且保证bids-validator通过！
+	
