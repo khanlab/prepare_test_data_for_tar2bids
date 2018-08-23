@@ -1,6 +1,8 @@
 tar_file_for_test/
 query_summary_useless/
 
+test/bids/
+
 *.tar
 *.tar.gz
 
